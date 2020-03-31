@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta name="viewport" content="width=device-width; initial-scale=0; maximum-scale=1; user-scalable=1;">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900|Quicksand:400,700|Questrial" rel="stylesheet" />
+	<link href="default.css" rel="stylesheet" type="text/css" media="all" />
+	<link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+
+<!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
+<body>
+<div class="wrapper">
+	<div id="welcome" class="container">
+			<h1><strong>Course Name<br><br></strong></h1><h3><p id="cnC"></p></h3><br><br>
+			<h1><strong>Teacher<br><br></strong></h1><h3><p id="teacherC"></p></h3><br><br>
+			<h1><strong>Content<br><br></strong></h1><h3><p id="contentC"></p></h3><br><br><br>
+	</div>
+</div>
+</body>
+
+<script type="text/javascript">
+
+	var course_code = document.URL.substring(parent.document.URL.indexOf('=') + 1, parent.document.URL.length);
+	xhr = new XMLHttpRequest();
+	send_out();
+	response();
+	function send_out() {
+		xhr.open("GET", "http://203.64.46.39:8095/Get_Course/" + course_code);
+		xhr.send();
+	}
+
+	function response(){
+		xhr.onreadystatechange = function() {
+		    if (xhr.readyState == XMLHttpRequest.DONE) {
+			       	var response = JSON.parse(xhr.responseText);
+			       	document.getElementById( 'cnC' ).innerHTML = response.course_name_r;
+			       	document.getElementById( 'teacherC' ).innerHTML = response.teacher_r;
+			       	document.getElementById( 'contentC' ).innerHTML = response.content_r.replace(/\n/gi, "<br>").replace(/ /gi, "&nbsp");
+			    }
+			}
+		}
+
+</script>
+    
+</html>
